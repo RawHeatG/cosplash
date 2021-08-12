@@ -1,6 +1,6 @@
 export const EnlargedImage = ({ image, setImage }) => {
   return (
-    <div className="fixed flex justify-center items-center w-screen h-screen bg-black bg-opacity-20">
+    <div className="fixed top-0 left-0 flex justify-center items-center w-screen h-screen bg-black bg-opacity-50">
       <div className="h-3/4 w-1/2 flex justify-center items-center m-10">
         <img
           className="object-fit rounded-xl"

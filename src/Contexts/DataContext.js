@@ -1,22 +1,32 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { getCollection } from "../Services/unsplashServices";
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { dataReducer } from "../Reducers/dataReducer";
+import { getCollection } from "../Services/dataServices";
 
 const DataContext = createContext();
 
+const initialState = {
+  sortBy: null,
+  filterBy: null,
+  images: [],
+};
+
 export const DataProvider = ({ children }) => {
-  const [images, setImages] = useState([]);
+  const [{ sortBy, filterBy, images }, dispatch] = useReducer(
+    dataReducer,
+    initialState
+  );
   useEffect(() => {
     (async function () {
       try {
         const response = await getCollection(2423569);
-        setImages(response.data);
+        dispatch({ type: "SET_IMAGES", payload: response.data });
       } catch (error) {
         console.error(error);
       }
     })();
   }, []);
   return (
-    <DataContext.Provider value={{ images, setImages }}>
+    <DataContext.Provider value={{ sortBy, filterBy, images, dispatch }}>
       {children}
     </DataContext.Provider>
   );

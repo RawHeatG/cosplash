@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useData } from "../Contexts";
-import { getSearchedImages } from "../Services/unsplashServices";
+import { getSearchedImages } from "../Services/dataServices";
 
 export const SearchBar = () => {
   const [searchKeyword, setSearchedKeyword] = useState();
-  const { setImages } = useData();
+  const { dispatch, sortBy, filterBy } = useData();
 
   //   const debouncedFetch = (event) => {
   //     console.log(event.target.value);
@@ -22,12 +22,11 @@ export const SearchBar = () => {
   //       })(event);
   //     }, 2000);
   //   };
-  console.log(searchKeyword);
 
   const getImages = async () => {
     try {
-      const response = await getSearchedImages(searchKeyword);
-      setImages(response.data.results);
+      const response = await getSearchedImages(searchKeyword, sortBy, filterBy);
+      dispatch({ type: "SET_IMAGES", payload: response.data.results });
     } catch (error) {
       console.error(error);
     }
