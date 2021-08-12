@@ -1,7 +1,9 @@
+import { Home } from "./Pages";
+
 function App() {
   return (
     <div className="App">
-      <h1>Welcome to CoSPlash</h1>
+      <Home />
     </div>
   );
 }
