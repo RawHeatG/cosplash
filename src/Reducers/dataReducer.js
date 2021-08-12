@@ -20,6 +20,12 @@ export const dataReducer = (state, { type, payload }) => {
         ...state,
         orientation: payload,
       };
+    case "SEARCH_KEYWORD":
+      return {
+        ...state,
+        searchKeyword: payload,
+      };
+
     case "RESET_FILTERS":
       return {
         ...state,

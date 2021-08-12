@@ -4,9 +4,8 @@ import { getSearchedImages } from "../Services/dataServices";
 import { Filter } from "./Filter";
 
 export const SearchBar = () => {
-  const [searchKeyword, setSearchKeyword] = useState();
   const [showFilters, setShowFilters] = useState(false);
-  const { dispatch, sortBy, color, orientation } = useData();
+  const { dispatch, sortBy, color, orientation, searchKeyword } = useData();
 
   const debounce = (func) => {
     let timer;
@@ -21,10 +20,17 @@ export const SearchBar = () => {
     };
   };
 
-  const getImages = async (searchKeyword, sortBy, color, orientation) => {
+  const getImages = async (
+    searchKeyword,
+    pageCount,
+    sortBy,
+    color,
+    orientation
+  ) => {
     try {
       const response = await getSearchedImages(
         searchKeyword,
+        pageCount,
         sortBy,
         color,
         orientation
@@ -45,9 +51,10 @@ export const SearchBar = () => {
             className="w-full h-full rounded-xl bg-gray-200 py-2 px-4"
             placeholder="Search"
             onChange={(event) => {
-              setSearchKeyword(event.target.value);
+              dispatch({ type: "SEARCH_KEYWORD", payload: event.target.value });
               optimizedGetImages(
                 event.target.value,
+                1,
                 sortBy,
                 color,
                 orientation
@@ -56,7 +63,7 @@ export const SearchBar = () => {
           />
           <button
             onClick={() =>
-              optimizedGetImages(searchKeyword, sortBy, color, orientation)
+              getImages(searchKeyword, 1, sortBy, color, orientation)
             }
           >
             <svg

@@ -8,14 +8,13 @@ const initialState = {
   sortBy: null,
   color: null,
   orientation: null,
+  searchKeyword: null,
   images: [],
 };
 
 export const DataProvider = ({ children }) => {
-  const [{ sortBy, color, images, orientation }, dispatch] = useReducer(
-    dataReducer,
-    initialState
-  );
+  const [{ sortBy, color, images, orientation, searchKeyword }, dispatch] =
+    useReducer(dataReducer, initialState);
   useEffect(() => {
     (async function () {
       try {
@@ -28,7 +27,7 @@ export const DataProvider = ({ children }) => {
   }, []);
   return (
     <DataContext.Provider
-      value={{ sortBy, color, images, orientation, dispatch }}
+      value={{ sortBy, color, images, orientation, searchKeyword, dispatch }}
     >
       {children}
     </DataContext.Provider>

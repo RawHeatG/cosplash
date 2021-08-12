@@ -9,14 +9,16 @@ export const getCollection = async (collectionId) =>
 
 export const getSearchedImages = async (
   searchedKeyword,
+  pageCount = 1,
   sortBy,
   color,
   orientation
-) =>
-  await axios(
+) => {
+  return await axios(
     `${API_LOCATION}/search/photos?client_id=${ACCESS_KEY}&query=${searchedKeyword}&per_page=30${
       color ? `&color=${color}` : ""
     }${sortBy ? `&order_by=${sortBy}` : ""}${
       orientation ? `&orientation=${orientation}` : ""
-    }`
+    }&page=${pageCount}`
   );
+};
