@@ -1,27 +1,21 @@
-import { useEffect, useState } from "react";
-import { EnlargedImage } from "../Components/EnlargedImage";
-import { getCollection } from "../Services/unsplashServices";
+import { useState } from "react";
+import { EnlargedImage, SearchBar, Filter } from "../Components";
+import { useData } from "../Contexts";
 
 export const Home = () => {
-  const [images, setImages] = useState([]);
+  const { images } = useData();
   const [enlargedImage, setEnlargedImage] = useState(null);
-  useEffect(() => {
-    (async function () {
-      try {
-        const response = await getCollection(2423569);
-        console.log(response);
-        setImages(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-  }, []);
 
   return (
-    <div>
+    <div className="m-4">
+      {console.log(images)}
       {enlargedImage && (
         <EnlargedImage image={enlargedImage} setImage={setEnlargedImage} />
       )}
+      <div className="flex justify-between m-4 text-2xl">
+        <SearchBar />
+        <Filter />
+      </div>
       {!images.length ? (
         <h1>No Images</h1>
       ) : (
