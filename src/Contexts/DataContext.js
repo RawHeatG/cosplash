@@ -6,12 +6,13 @@ const DataContext = createContext();
 
 const initialState = {
   sortBy: null,
-  filterBy: null,
+  color: null,
+  orientation: null,
   images: [],
 };
 
 export const DataProvider = ({ children }) => {
-  const [{ sortBy, filterBy, images }, dispatch] = useReducer(
+  const [{ sortBy, color, images, orientation }, dispatch] = useReducer(
     dataReducer,
     initialState
   );
@@ -26,7 +27,9 @@ export const DataProvider = ({ children }) => {
     })();
   }, []);
   return (
-    <DataContext.Provider value={{ sortBy, filterBy, images, dispatch }}>
+    <DataContext.Provider
+      value={{ sortBy, color, images, orientation, dispatch }}
+    >
       {children}
     </DataContext.Provider>
   );

@@ -10,16 +10,22 @@ export const dataReducer = (state, { type, payload }) => {
         ...state,
         sortBy: payload,
       };
-    case "FILTER":
+    case "COLOR":
       return {
         ...state,
-        filterBy: payload,
+        color: payload,
+      };
+    case "ORIENTATION":
+      return {
+        ...state,
+        orientation: payload,
       };
     case "RESET_FILTERS":
       return {
         ...state,
         sortBy: null,
-        filterBy: null,
+        color: null,
+        orientation: null,
       };
 
     default:

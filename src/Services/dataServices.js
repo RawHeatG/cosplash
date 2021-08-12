@@ -7,9 +7,16 @@ export const getCollection = async (collectionId) =>
     `${API_LOCATION}/collections/${collectionId}/photos?client_id=${ACCESS_KEY}&per_page=30`
   );
 
-export const getSearchedImages = async (searchedKeyword, sortBy, filterBy) =>
+export const getSearchedImages = async (
+  searchedKeyword,
+  sortBy,
+  color,
+  orientation
+) =>
   await axios(
     `${API_LOCATION}/search/photos?client_id=${ACCESS_KEY}&query=${searchedKeyword}&per_page=30${
-      filterBy ? `&color=${filterBy}` : ""
-    }${sortBy ? `&order_by=${sortBy}` : ""}`
+      color ? `&color=${color}` : ""
+    }${sortBy ? `&order_by=${sortBy}` : ""}${
+      orientation ? `&orientation=${orientation}` : ""
+    }`
   );

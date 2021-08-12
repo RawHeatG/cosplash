@@ -1,21 +1,13 @@
-import { useState } from "react";
 import { useData } from "../Contexts";
 
-export const Filter = () => {
-  const [showFilters, setShowFilters] = useState(false);
-  const { sortBy, filterBy, dispatch } = useData();
+export const Filter = ({ showFilters, setShowFilters }) => {
+  const { sortBy, color, orientation, dispatch } = useData();
   return (
     <div>
-      <button
-        onClick={() => setShowFilters((prevValue) => !prevValue)}
-        className="p-4 rounded-full"
-      >
-        Filters
-      </button>
       {showFilters && (
-        <div className="flex justify-between bg-gray-200 rounded-xl p-6">
-          <form className="flex space-x-20 px-6">
-            <fieldset className="flex flex-col space-">
+        <div className="flex flex-wrap justify-between bg-gray-200 rounded-xl p-6">
+          <form className="flex space-x-0 sm:space-x-20 px-6 flex-wrap">
+            <fieldset className="flex flex-col p-2">
               <legend>Sort By</legend>
               <div>
                 <input
@@ -39,29 +31,92 @@ export const Filter = () => {
               </div>
             </fieldset>
 
-            <fieldset className="flex flex-col">
-              <legend>Filter By</legend>
+            <fieldset className="flex flex-col p-2">
+              <legend>Color</legend>
               <div>
+                <div>
+                  <input
+                    type="radio"
+                    name="color"
+                    onChange={() => dispatch({ type: "COLOR", payload: null })}
+                    checked={color === null}
+                  />{" "}
+                  Any Color
+                </div>
                 <input
                   type="radio"
-                  name="filter"
+                  name="color"
                   onChange={() =>
-                    dispatch({ type: "FILTER", payload: "black_and_white" })
+                    dispatch({ type: "COLOR", payload: "black_and_white" })
                   }
-                  checked={filterBy && filterBy === "black_and_white"}
+                  checked={color && color === "black_and_white"}
                 />{" "}
                 B&W
               </div>
-              <div>
-                <input
-                  type="radio"
-                  name="filter"
-                  onChange={() =>
-                    dispatch({ type: "FILTER", payload: "black_and_white" })
-                  }
-                  checked={filterBy === null}
-                />{" "}
-                Any Color
+            </fieldset>
+            <fieldset className="flex flex-col p-2">
+              <legend>Orientation</legend>
+              <div className="flex flex-wrap">
+                <div className="pr-4 flex flex-col">
+                  <div>
+                    <input
+                      type="radio"
+                      name="orientation"
+                      onChange={() =>
+                        dispatch({
+                          type: "ORIENTATION",
+                          payload: null,
+                        })
+                      }
+                      checked={orientation === null}
+                    />{" "}
+                    Any
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      name="orientation"
+                      onChange={() =>
+                        dispatch({
+                          type: "ORIENTATION",
+                          payload: "landscape",
+                        })
+                      }
+                      checked={orientation && orientation === "landscape"}
+                    />{" "}
+                    Landscape
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <input
+                      type="radio"
+                      name="orientation"
+                      onChange={() =>
+                        dispatch({
+                          type: "ORIENTATION",
+                          payload: "portrait",
+                        })
+                      }
+                      checked={orientation && orientation === "portrait"}
+                    />{" "}
+                    Portrait
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      name="orientation"
+                      onChange={() =>
+                        dispatch({
+                          type: "ORIENTATION",
+                          payload: "squarish",
+                        })
+                      }
+                      checked={orientation && orientation === "squarish"}
+                    />{" "}
+                    Squarish
+                  </div>
+                </div>
               </div>
             </fieldset>
           </form>
